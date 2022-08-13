@@ -76,18 +76,100 @@
 //	return 0;
 //}
 //º¯Êıµİ¹é·¨Çó½×³Ë
-int Fun(int n)
+//int Fun(int n)
+//{
+//	if (1 == n)
+//		return 1;
+//	else
+//		return n*Fun(n - 1);
+//}
+//int main()
+//{
+//	int n = 0;
+//	scanf("%d", &n);
+//	int ret = Fun(n);
+//	printf("%d! = %d\n", n, ret);
+//	return 0;
+//}
+//×Ö·û´®ÄæĞò
+//void reverse_string(char* p, int sz)
+//{
+//	int i = 0;
+//	int j = 0;
+//	for (i = 0, j = sz - 1; i < j; i++, j--)
+//	{
+//		char tmp = *(p + i);
+//		*(p + i) = *(p + j);
+//		*(p + j) = tmp;
+//
+//	}
+//}
+//int main()
+//{
+//	char arr[] = "abcdef";
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	reverse_string(arr, sz);
+//	int i = 0;
+//	for (i = 0; i < sz; i++)
+//	{
+//		printf("%c ", arr[i]);
+//	}
+//	return 0;
+//}
+//ÓÃµİ¹éµÄ·½Ê½ÊµÏÖ×Ö·û´®ÄæĞò
+#include<string.h>
+//void reverse_string(char* left, char* right)
+//{
+//	if (left < right)
+//	{
+//		char tmp = *left;
+//		*left = *right;
+//		*right = tmp;
+//		reverse_string(left + 1, right - 1);
+//	}
+//	
+//}
+//int main()
+//{
+//	char arr[] = "abcdefg";
+//	int i = 0;
+//	reverse_string(arr, &arr[strlen(arr) - 1]);
+//	for (i = 0; (unsigned int)i < strlen(arr); i++)
+//	{
+//		printf("%c ", arr[i]);
+//	}
+//	return 0;
+//
+//}
+int my_strlen(char* p)
 {
-	if (1 == n)
-		return 1;
-	else
-		return n*Fun(n - 1);
+	int count = 0;
+	int i = 0;
+	while (*(p + i) != '\0')
+	{
+		count++;
+		i++;
+	}
+	return count;
+}
+void reverse_string(char arr[])
+{
+	char tmp = arr[0];
+	int len = my_strlen(arr);
+	arr[0] = arr[len - 1];
+	arr[len - 1] = '\0';
+	if (my_strlen(arr) >= 2)
+		reverse_string(arr + 1);
+	arr[len - 1] = tmp;
 }
 int main()
 {
-	int n = 0;
-	scanf("%d", &n);
-	int ret = Fun(n);
-	printf("%d! = %d\n", n, ret);
+	char arr[] = "abcdefg";
+	int i = 0;
+	reverse_string(arr);
+	for (i = 0; (unsigned int)i < strlen(arr); i++)
+	{
+		printf("%c ", arr[i]);
+	}
 	return 0;
 }
