@@ -123,4 +123,29 @@
 //	}
 //	return 0;
 //}
-//打印菱形图案
+
+typedef struct stu
+{
+	char name[20];
+	short age;
+	char sex[5];
+	char tele[20];
+}stu;
+void print(stu* p)
+{
+	printf("%s\n",p->name);
+	printf("%d\n", p->age);
+	printf("%s\n", p->sex);
+	printf("%s\n", p->tele);
+}
+int main()
+{
+	stu s = { "张三", 20, "男", "15712321567" };
+	/*printf("%s\n", s.name);
+	printf("%d\n", s.age);
+	printf("%s\n", s.sex);
+	printf("%s\n", s.tele);*/
+	/*print(s);*/
+	print(&s);
+	return 0;
+}
