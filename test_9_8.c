@@ -73,7 +73,7 @@ void FindMax(int tab[],int nb){
 void FindMin(int tab[],int nb){
   int i;
   int j=0;
-  int min=INT_MIN;
+  int min=INT_MAX;
   for(i=0;i<nb;i++){
     if(tab[i]<min){
       min=tab[i];
