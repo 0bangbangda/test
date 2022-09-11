@@ -101,12 +101,31 @@
 //	 return NULL;
 // }
 //
-int main(void){
-	char tab[] = "abc.def@ghi%";
-	char* p = "@.%";
-	char* ret = NULL;
-	for (ret = strtok(tab, p); ret; ret = strtok(NULL, p)){
-		printf("%s\n", ret);
+//int main(void){
+//	char tab[] = "abc.def@ghi%";
+//	char* p = "@.%";
+//	char* ret = NULL;
+//	for (ret = strtok(tab, p); ret; ret = strtok(NULL, p)){
+//		printf("%s\n", ret);
+//	}
+//	return EXIT_SUCCESS;
+//}
+#define n 5/*宏定义是与类型无关的*/
+double meanTab(int tab[], int nb);/*函数的声明必须指定参数的类型*/
+double meanTab(int tab[], int nb){
+
+	int sum = 0;
+	int i;
+	for (i = 0; i < n; i++)
+	{
+		sum += i;
 	}
+	return sum / n;
+}
+int main(void){
+	int nb = 5;/*解决方案：1.单独设立一个变量用来传参 2.直接不用宏定义，不去规定数组的大小，即int tab[]={},算出数组大小并赋给一个变量*/
+	int tab[n] = { 1, 2, 3, 4, 5 };
+	double avg = meanTab(tab, nb);
+	printf("%lf\n", avg);
 	return EXIT_SUCCESS;
 }
