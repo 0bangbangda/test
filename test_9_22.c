@@ -48,15 +48,21 @@
 /*   } */
 /*   return q; */
 /* } */
-int produit(const int x, int y);
-int main(void)
-{
-	int a, b;
+int produit(int x, int y);
+int main(void){
+	int a, b, x, y;
 	scanf("%d %d", &a, &b);
-	printf("p = %d\n", produit(a, b));
+	x = 1;
+	while (x <= a*b){
+		if (a*b%x == 0){
+			y = a*b / x;
+			printf("%d * %d = %d\n", x, y, produit(x, y));
+		}
+		x = x + 1;
+	}
 	return EXIT_SUCCESS;
 }
-int produit(const int x, int y)
+int produit(int x, int y)
 {
 	int p = 0;
 	while (y>0){
@@ -64,5 +70,7 @@ int produit(const int x, int y)
 		p = p + x;
 	}
 	return p;
+}
+
 
 }
