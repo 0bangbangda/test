@@ -59,41 +59,41 @@
 /*     sum+=tab[i]; */
 /*   return sum/n; */
 /* } */
-void InitTab(int tab1[], int tab2[], const int n);
-void PrintTab(const int tab1[], const int tab2[], const int n);
-int Produit(const int tab1[], const int tab2[], const int n);
+void InitTab(int tab1[],int tab2[],const int n);
+void PrintTab(const int tab1[],const int tab2[],const int n);
+int Produit(const int tab1[],const int tab2[],const int n);
 int main(void){
-	int n;
-	scanf("%d", &n);
-	int tab1[n], tab2[n];
-	InitTab(tab1, tab2, n);
-	PrintTab(tab1, tab2, n);
-	printf("v.w = %d\n", Produit(tab1, tab2, n));
-	return EXIT_SUCCESS;
+  int n;
+  scanf("%d",&n);
+  int tab1[n],tab2[n];
+  InitTab(tab1,tab2,n);
+  PrintTab(tab1,tab2,n);
+  printf("v.w = %d\n",Produit(tab1,tab2,n));
+  return EXIT_SUCCESS; 
 }
-void InitTab(int tab1[], int tab2[], const int n)
+void InitTab(int tab1[],int tab2[],const int n)
 {
-	srand(time(NULL));
-	for (int i = 0; i<n; i++){
-		tab1[i] = rand() % 100;
-		tab2[i] = rand() % 100;
-	}
+  srand(time(NULL));
+  for(int i=0;i<n;i++){
+    tab1[i]=rand()%100;
+    tab2[i]=rand()%100;
+  }
 }
-void PrintTab(const int tab1[], const int tab2[], const int n)
+void PrintTab(const int tab1[],const int tab2[],const int n)
 {
-	printf("v = (");
-	for (int i = 0; i<n; i++)
-		printf("%d,", tab1[i]);
-	printf("\b)\n");
-	printf("w = (");
-	for (int i = 0; i<n; i++)
-		printf("%d,", tab2[i]);
-	printf("\b)\n");
+  printf("v = (");
+  for(int i=0;i<n;i++)
+    printf("%d,",tab1[i]);
+  printf("\b)\n");
+  printf("w = (");
+  for(int i=0;i<n;i++)
+    printf("%d,",tab2[i]);
+  printf("\b)\n");
 }
-int Produit(const int tab1[], const int tab2[], const int n)
+int Produit(const int tab1[],const int tab2[],const int n)
 {
-	int sum = 0;
-	for (int i = 0; i<n; i++)
-		sum += tab1[i] * tab2[i];
-	return sum;
+  int sum=0;
+  for(int i=0;i<n;i++)
+    sum+=tab1[i]*tab2[i];
+  return sum;
 }
