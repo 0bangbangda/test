@@ -1,4 +1,4 @@
-#include"game.h"
+#include"game2.h"
 int main(void){
 	int input;
 	do{
