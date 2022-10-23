@@ -44,11 +44,11 @@ void display(int arr[M][N], int row, int col)
 	}
 }
 void SetBoard(int arr[M][N], int row, int col)
-{   //遍历赋值
-	for (int i = 0; i < row; i++){
-		for (int j = 0; j < col; j++)
-			arr[i][j] = rand() % 4 + 1;//在1-4之间随机一个数赋值
-	}
+{
+	//在随机的位置赋1-4的任意值
+	int x, y;
+	x = rand() % 4;
+	y = rand() % 4;
 }
 int verifier(int arr[M][N], int row, int col)
 {
