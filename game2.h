@@ -9,4 +9,6 @@ void test();
 void InitArr(int arr[M][N], const int row, const int col);
 void display(int arr[M][N], int row, int col);
 void SetBoard(int arr[M][N], int row, int col);
-int verifier(int arr[M][N], int row, int col);
+int CheckFull(int arr[M][N], int row, int col);
+void FindEmpty(int arr[M][N], int row, int col, int* p1, int* p2);
+int check(int arr[M][N], int row, int col);
