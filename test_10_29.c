@@ -15,26 +15,35 @@
 //	return EXIT_SUCCESS;
 //
 //}
-float Max(float a, float b, float c);
-#define Max2(a,b,c) (a>b)?((a>c)?a:c):((b>c)?b:c)
+//float Max(float a, float b, float c);
+//#define Max2(a,b,c) (a>b)?((a>c)?a:c):((b>c)?b:c)
+//int main(void){
+//	float a, b, c;
+//	scanf("%f %f %f", &a, &b, &c);
+//	printf("%.3f\n", Max(a, b, c));
+//	printf("%.3f", Max2(a, b, c));
+//	return EXIT_SUCCESS;
+//}
+//float Max(float a, float b, float c){
+//	if (a > b){
+//		if (a > c)
+//			return a;
+//		else
+//			return c;
+//	}
+//	else{
+//		if (b > c)
+//			return b;
+//		else
+//			return c;
+//	}
+//}
 int main(void){
-	float a, b, c;
-	scanf("%f %f %f", &a, &b, &c);
-	printf("%.3f\n", Max(a, b, c));
-	printf("%.3f", Max2(a, b, c));
+	/*float a, b;
+	scanf("%3.2f %2.1f", &a, &b);
+	printf("%f %f", a, b);*/
+	int a, b;
+	scanf("%2d%d", &a, &b);
+	printf("a=%d,b=%d", a, b);
 	return EXIT_SUCCESS;
-}
-float Max(float a, float b, float c){
-	if (a > b){
-		if (a > c)
-			return a;
-		else
-			return c;
-	}
-	else{
-		if (b > c)
-			return b;
-		else
-			return c;
-	}
 }
