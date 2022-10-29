@@ -47,7 +47,7 @@ void SetBoard(int arr[M][N], int row, int col)
 {
 	//在随机的位置赋1-4的任意值
 	for (int i = 0; i < M*N; i++){//设置赋值的次数
-		int x, y;
+		int x, y, count = 0;
 		x = rand() % 4;
 		y = rand() % 4;
 		//判断是否被占用
@@ -55,10 +55,11 @@ void SetBoard(int arr[M][N], int row, int col)
 			FindEmpty(arr, M, N, &x, &y);
 		//赋值并判断是否合理
 		arr[x][y] = rand() % 4 + 1;
-		while (!check(arr, M, N)){
-			arr[x][y] = (arr[x][y] + 1) % 4;
+		while (!check(arr, M, N)&&count!=4){
+			count++;
+			arr[x][y] = arr[x][y] % 4 + 1;
 		}
-	}
+    	}
 }
 int CheckFull(int arr[M][N], int row, int col)
 {   //检验数组填满以后是否满足规则
@@ -119,6 +120,7 @@ int check(int arr[M][N], int row, int col)
 		}
 		if (2 == num1 || 2 == num2 || 2 == num3 || 2 == num4)
 			return 0;
+		num1 = 0, num2 = 0, num3 = 0, num4 = 0;
 	}
 	//计数器归零
 	num1 = 0, num2 = 0, num3 = 0, num4 = 0;
@@ -136,6 +138,7 @@ int check(int arr[M][N], int row, int col)
 		}
 		if (2 == num1 || 2 == num2 || 2 == num3 || 2 == num4)
 			return 0;
+		num1 = 0, num2 = 0, num3 = 0, num4 = 0;
 	}
 	
 	//检验每一个宫格
