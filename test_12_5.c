@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #define LG_MAX 100
 typedef int BIGNATS[LG_MAX];
-enum op{Add=1,Sous,Multi,Div,Modul,Cmp};
+enum op{Addition=1,Soustraction,Multiplication,Division,Modulation,Comparation};
 void zero(BIGNATS b);
 void print(BIGNATS b);
 void caractere(BIGNATS b);
@@ -10,6 +10,8 @@ void trans(BIGNATS b,int n);
 void lire(BIGNATS b);
 void lecture(BIGNATS b1, BIGNATS b2);
 void liste();
+void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3);
+void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3);
 int main(void){
 	//BIGNATS b;
 	/*zero(b);
@@ -22,32 +24,44 @@ int main(void){
 	/*print(b1);
 	printf("\n");
 	print(b2);*/
-	char op;
-	scanf("%c", &op);
+	liste();
+	int op;
+	scanf("%d", &op);
 	switch (op){
-	case '+':    
+	case Addition:    
 		lecture(b1, b2);
 		Add(b1,b2,b3);
+		printf("b1+b2=");
+		print(b3);
 		break;   
-	case '-':
+	case Soustraction:
+		printf("Attention:b1>b2\n");
 		lecture(b1, b2);
 		Sous(b1, b2, b3);
+		printf("b1-b2=");
+		print(b3);
 		break;
-	case '*':
+	case Multiplication:
 		lecture(b1, b2);
-		Multi(b1, b2, b3);
+		//Multi(b1, b2, b3);
+		print(b3);
 		break;
-	case '/':
+	case Division:
 		lecture(b1, b2);
-		Div(b1, b2, b3);
+		//Div(b1, b2, b3);
+		print(b3);
 		break;
-	case '%':
+	case Modulation:
 		lecture(b1, b2);
-		Modul(b1, b2, b3);
+		//Modul(b1, b2, b3);
+		print(b3);
 		break;
-	case 'c':
-		int ret = Cmp(b1, b2);
-		printResult(ret);
+	case Comparation:
+		//int ret = Cmp(b1, b2);
+		//printResult(ret);
+		print(b3);
+	default:
+		fprintf(stderr, "error\n");
 	}
 	return EXIT_SUCCESS;
 }
@@ -108,6 +122,39 @@ void lecture(BIGNATS b1, BIGNATS b2)
 }
 void liste()
 {
-	printf("choisir:\n");
+	printf("1.Addition\n");
+	printf("2.Soustraction\n");
+	printf("3.Multiplication\n");
+	printf("4.Division\n");
+	printf("5.Modulation\n");
+	printf("6.Comparation\n");
+	printf("choisir:");
 	
+}
+void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3)
+{
+	for (int i = 0; i < LG_MAX; i++){
+		if ((b1[i] + b2[i]) >= 10){
+			b3[i] = b1[i] + b2[i] - 10;
+			b1[i + 1]++;
+		}
+		else
+			b3[i] = b1[i] + b2[i];
+	}
+}
+void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3)
+{
+	for (int i = 0; i < LG_MAX; i++){
+		if (b1[i]>=b2[i])
+			b3[i] = b1[i] - b2[i];
+		else{
+			int k = i;
+			while (!b1[++k]);
+			b1[k]--;
+			while (--k != i)
+				b1[k] = 9;
+			b1[i] += 10;
+			b3[i] = b1[i] - b2[i];
+		}
+	}
 }
