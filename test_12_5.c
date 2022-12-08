@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define LG_MAX 100
+#define LG_MAX 10
 typedef int BIGNATS[LG_MAX];
 enum op{Addition=1,Soustraction,Multiplication,Division,Modulation,Comparation};
 void zero(BIGNATS b);
@@ -12,6 +12,7 @@ void lecture(BIGNATS b1, BIGNATS b2);
 void liste();
 void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3);
 void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3);
+void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3);
 int main(void){
 	//BIGNATS b;
 	/*zero(b);
@@ -67,17 +68,18 @@ int main(void){
 }
 void zero(BIGNATS b)
 {
-	for (int i = 0; i < LG_MAX; i++){
-		b[i] = 0;
+		for (int i = 0; i < LG_MAX; i++){
+			b[i] = 0;
+		}
 	}
-}
+	
 void print(BIGNATS b)
 {
 	int m;
-	for (m = 0; m < LG_MAX; m++)
-	if (!b[m])
+	for (m = LG_MAX-1; m >=0; m--)
+	if (b[m])
 		break;
-	for (int i = m - 1; i >= 0; i--)
+	for (int i = m ; i >= 0; i--)
 		printf("%d", b[i]);
 	printf("\n");
 
@@ -134,12 +136,13 @@ void liste()
 void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 {
 	for (int i = 0; i < LG_MAX; i++){
-		if ((b1[i] + b2[i]) >= 10){
+		if ((b1[i] + b2[i] + b3[i]) >= 10){
+			b3[i + 1]++;
 			b3[i] = b1[i] + b2[i] - 10;
-			b1[i + 1]++;
+
 		}
 		else
-			b3[i] = b1[i] + b2[i];
+			b3[i] = b1[i] + b2[i] + b3[i];
 	}
 }
 void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3)
@@ -157,4 +160,8 @@ void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 			b3[i] = b1[i] - b2[i];
 		}
 	}
+}
+void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3){
+	int i = 0;
+	
 }
