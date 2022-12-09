@@ -44,7 +44,8 @@ int main(void){
 		break;
 	case Multiplication:
 		lecture(b1, b2);
-		//Multi(b1, b2, b3);
+		Multi(b1, b2, b3);
+		printf("b1*b2=");
 		print(b3);
 		break;
 	case Division:
@@ -136,13 +137,12 @@ void liste()
 void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 {
 	for (int i = 0; i < LG_MAX; i++){
-		if ((b1[i] + b2[i] + b3[i]) >= 10){
-			b3[i + 1]++;
+		if (b1[i] + b2[i] >= 10){
+			b1[i + 1]++;
 			b3[i] = b1[i] + b2[i] - 10;
-
 		}
 		else
-			b3[i] = b1[i] + b2[i] + b3[i];
+			b3[i] = b1[i] + b2[i];
 	}
 }
 void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3)
@@ -162,6 +162,19 @@ void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 	}
 }
 void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3){
-	int i = 0;
+	while (1){
+		if (b2[0] == 0){
+			int k = 0;
+			while ((!b2[++k]) && k < LG_MAX);
+			if (k == LG_MAX)
+				break;
+			b2[k]--;
+			while (--k != 0)
+				b2[k] = 9;
+			b2[0] = 10;
+		}
+		while (b2[0]--)
+			Add(b1, b3, b3);
+	}
 	
 }
