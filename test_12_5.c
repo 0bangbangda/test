@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define LG_MAX 10
+#define LG_MAX 100
 typedef int BIGNATS[LG_MAX];
 enum op{Addition=1,Soustraction,Multiplication,Division,Modulation,Comparation};
 void zero(BIGNATS b);
@@ -136,14 +136,18 @@ void liste()
 }
 void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 {
+	BIGNATS b4;
+	zero(b4); 
 	for (int i = 0; i < LG_MAX; i++){
-		if (b1[i] + b2[i] >= 10){
-			b1[i + 1]++;
-			b3[i] = b1[i] + b2[i] - 10;
+		if (b1[i] + b2[i] + b4[i] >= 10){
+			b4[i + 1]++;
+			b4[i] = b1[i] + b2[i] + b4[i] - 10;
 		}
 		else
-			b3[i] = b1[i] + b2[i];
+			b4[i] = b1[i] + b2[i] + b4[i];
 	}
+	for (int i = 0; i < LG_MAX; i++)
+		b3[i] = b4[i];
 }
 void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 {
@@ -173,8 +177,11 @@ void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3){
 				b2[k] = 9;
 			b2[0] = 10;
 		}
-		while (b2[0]--)
+		while (b2[0]){
 			Add(b1, b3, b3);
+			b2[0]--;
+		}
+		
 	}
 	
 }
