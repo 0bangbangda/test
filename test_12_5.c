@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #define LG_MAX 100
 typedef int BIGNATS[LG_MAX];
-enum op{Addition=1,Soustraction,Multiplication,Division,Modulation,Comparation};
+enum op{Addition=1,Soustraction,Multiplication,Division,Modulation,Comparason};
 void zero(BIGNATS b);
 void print(BIGNATS b);
 void caractere(BIGNATS b);
@@ -13,6 +13,9 @@ void liste();
 void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3);
 void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3);
 void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3);
+int Cmp(BIGNATS b1, BIGNATS b2);
+void printResult(int n);
+void Div(BIGNATS b1, BIGNATS b2, BIGNATS b3);
 int main(void){
 	//BIGNATS b;
 	/*zero(b);
@@ -49,8 +52,9 @@ int main(void){
 		print(b3);
 		break;
 	case Division:
-		lecture(b1, b2);
-		//Div(b1, b2, b3);
+		lecture(b1, b2, b3);
+		Div(b1, b2, b3);
+		printf("b1/b2=");
 		print(b3);
 		break;
 	case Modulation:
@@ -58,10 +62,10 @@ int main(void){
 		//Modul(b1, b2, b3);
 		print(b3);
 		break;
-	case Comparation:
-		//int ret = Cmp(b1, b2);
-		//printResult(ret);
-		print(b3);
+	case Comparason:
+		lecture(b1, b2);
+		printResult(Cmp(b1, b2));
+		break;
 	default:
 		fprintf(stderr, "error\n");
 	}
@@ -80,6 +84,8 @@ void print(BIGNATS b)
 	for (m = LG_MAX-1; m >=0; m--)
 	if (b[m])
 		break;
+	if (m < 0)
+		m = 0;
 	for (int i = m ; i >= 0; i--)
 		printf("%d", b[i]);
 	printf("\n");
@@ -181,7 +187,69 @@ void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3){
 			Add(b1, b3, b3);
 			b2[0]--;
 		}
-		
 	}
-	
+}
+int Cmp(BIGNATS b1, BIGNATS b2)
+{
+	int i, j;
+	for (i = LG_MAX - 1; i >= 0; i--){
+		if (b1[i])
+			break;
+	}
+	for (j = LG_MAX - 1; j >= 0; j--){
+		if (b2[j])
+			break;
+	}
+	if (i > j)
+		return 1;
+	else if (i < j)
+		return -1;
+	else{
+		while (b1[i] == b2[j] && i >= 0 && j >= 0){
+			i--; j--;
+		}
+		if (i < 0)
+			return 0;
+		else{
+			if (b1[i]>b2[j])
+				return 1;
+			else
+				return -1;
+		}
+	}
+}
+void printResult(int n)
+{
+	if (n == 1)
+		printf("b1>b2\n");
+	else if (n == -1)
+		printf("b1<b2\n");
+	else
+		printf("b1=b2\n");
+}
+void Div(BIGNATS b1, BIGNATS b2, BIGNATS b3)
+{
+	while (Cmp(b1, b2) > 0){
+		int i = 0;
+		Sous(b1, b2, b1);
+		if (b3[0] != 9)
+			b3[0]++;
+		else{
+			b3[0] = 0;
+			while (b3[++i] == 9)
+				b3[i] = 0;
+			b3[i]++;
+		}
+	}
+	if (Cmp(b1, b2) == 0){
+		int i = 0;
+		if (b3[0] != 9)
+			b3[0]++;
+		else{
+			b3[0] = 0;
+			while (b3[++i] == 9)
+				b3[i] = 0;
+			b3[i]++;
+		}
+	}
 }
