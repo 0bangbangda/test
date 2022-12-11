@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #define LG_MAX 100
 typedef int BIGNATS[LG_MAX];
-enum op{Addition=1,Soustraction,Multiplication,Division,Modulation,Comparason};
+enum op{Addition=1,Soustraction,Multiplication,Division,Modulation,Comparason,Factorielle};
 void zero(BIGNATS b);
 void print(BIGNATS b);
 void caractere(BIGNATS b);
@@ -16,12 +16,15 @@ void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3);
 int Cmp(BIGNATS b1, BIGNATS b2);
 void printResult(int n);
 void Div(BIGNATS b1, BIGNATS b2, BIGNATS b3);
+void Modul(BIGNATS b1, BIGNATS b2, BIGNATS b3);
+void fact(int n, BIGNATS b);
 int main(void){
 	//BIGNATS b;
 	/*zero(b);
 	caractere(b);
 	print(b);*/
 	BIGNATS b1, b2, b3;
+	int n;
 	zero(b1);
 	zero(b2);
 	zero(b3);
@@ -59,12 +62,19 @@ int main(void){
 		break;
 	case Modulation:
 		lecture(b1, b2);
-		//Modul(b1, b2, b3);
+		Modul(b1, b2, b3);
+		printf("b1%%b2=");
 		print(b3);
 		break;
 	case Comparason:
 		lecture(b1, b2);
 		printResult(Cmp(b1, b2));
+		break;
+	case Factorielle:
+		scanf("%d", &n);
+		fact(n, b3);
+		printf("%d!=", n);
+		print(b3);
 		break;
 	default:
 		fprintf(stderr, "error\n");
@@ -137,6 +147,7 @@ void liste()
 	printf("4.Division\n");
 	printf("5.Modulation\n");
 	printf("6.Comparation\n");
+	printf("7.Factorielle\n");
 	printf("choisir:");
 	
 }
@@ -252,4 +263,31 @@ void Div(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 			b3[i]++;
 		}
 	}
+}
+void Modul(BIGNATS b1, BIGNATS b2, BIGNATS b3)
+{
+	while (Cmp(b1, b2) == 1)
+		Sous(b1, b2, b1);
+	if (Cmp(b1, b2) == -1){
+		for (int i = 0; i < LG_MAX; i++)
+			b3[i] = b1[i];
+	}
+}
+void fact(int n, BIGNATS b)
+{
+	BIGNATS b2, b3;
+	zero(b2);
+	zero(b);
+	zero(b3);
+	b3[0] = 1;
+	
+	for (int i = 1; i <= n; i++){
+		trans(b2, i);
+		Multi(b3, b2, b);
+		for (int i = 0; i < LG_MAX; i++)
+			b3[i] = b[i];
+		zero(b);
+	}
+	for (int i = 0; i < LG_MAX - 1; i++)
+		b[i] = b3[i];
 }
