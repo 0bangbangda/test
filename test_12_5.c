@@ -1,80 +1,82 @@
+﻿/*
+* L’objectif de ce projet est de définir et de manipuler des grands entiers naturels.
+* Pour manipuler des entiers naturels(positifs ou nuls) de taille quelconque, en particulier plus
+* grands que les entiers max des types entiers prédéfinis, vous allez définir le type BigNat.Les chiffres
+* des entiers naturels BigNat, par défaut en base 10, seront conservés dans un tableau d’entiers.**/
 #include<stdio.h>
 #include<stdlib.h>
-#define LG_MAX 100
+#define LG_MAX 100 //LG_MAX est le nombre d'éléments d'un tableau.
 typedef int BIGNATS[LG_MAX];
 enum op{Addition=1,Soustraction,Multiplication,Division,Modulation,Comparason,Factorielle};
+/*
+* rôle:permette l'initialision à 0 d'un BIGNAT
+*/
 void zero(BIGNATS b);
-void print(BIGNATS b);
-void caractere(BIGNATS b);
+/*
+rôle:affiche la valeur d'un BIGNAT
+*/
+void écriture(BIGNATS b);
 void trans(BIGNATS b,int n);
 void lire(BIGNATS b);
 void lecture(BIGNATS b1, BIGNATS b2);
 void liste();
-void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3);
-void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3);
-void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3);
-int Cmp(BIGNATS b1, BIGNATS b2);
-void printResult(int n);
-void Div(BIGNATS b1, BIGNATS b2, BIGNATS b3);
+void Add(const BIGNATS b1,const BIGNATS b2, BIGNATS b3);
+void Sous(BIGNATS b1, const BIGNATS b2, BIGNATS b3);
+void Multi(const BIGNATS b1, BIGNATS b2, BIGNATS b3);
+int Cmp(const BIGNATS b1, const BIGNATS b2);
+void afficherResult(const int n);
+void Div(BIGNATS b1, const BIGNATS b2, BIGNATS b3);
 void Modul(BIGNATS b1, BIGNATS b2, BIGNATS b3);
-void fact(int n, BIGNATS b);
+void fact(const int n, BIGNATS b);
+void assignation(BIGNATS b1,const BIGNATS b2);
+int readNextInt();
 int main(void){
-	//BIGNATS b;
-	/*zero(b);
-	caractere(b);
-	print(b);*/
 	BIGNATS b1, b2, b3;
 	int n;
 	zero(b1);
 	zero(b2);
 	zero(b3);
-	/*print(b1);
-	printf("\n");
-	print(b2);*/
 	liste();
-	int op;
-	scanf("%d", &op);
-	switch (op){
+	switch (readNextInt()){
 	case Addition:    
 		lecture(b1, b2);
 		Add(b1,b2,b3);
 		printf("b1+b2=");
-		print(b3);
+		écriture(b3);
 		break;   
 	case Soustraction:
 		printf("Attention:b1>b2\n");
 		lecture(b1, b2);
 		Sous(b1, b2, b3);
 		printf("b1-b2=");
-		print(b3);
+		écriture(b3);
 		break;
 	case Multiplication:
 		lecture(b1, b2);
 		Multi(b1, b2, b3);
 		printf("b1*b2=");
-		print(b3);
+		écriture(b3);
 		break;
 	case Division:
 		lecture(b1, b2, b3);
 		Div(b1, b2, b3);
 		printf("b1/b2=");
-		print(b3);
+		écriture(b3);
 		break;
 	case Modulation:
 		lecture(b1, b2);
 		Modul(b1, b2, b3);
 		printf("b1%%b2=");
-		print(b3);
+		écriture(b3);
 		break;
 	case Comparason:
 		lecture(b1, b2);
-		printResult(Cmp(b1, b2));
+		afficherResult(Cmp(b1, b2));
 		break;
 	case Factorielle:
-		scanf("%d", &n);
-		fact(n, b3);
-		printf("%d!=", n);
-		print(b3);
+		fact(n=readNextInt(), b3);
+		printf("%d!=",n);
+		écriture(b3);
 		break;
 	default:
 		fprintf(stderr, "error\n");
@@ -83,12 +85,11 @@ int main(void){
 }
 void zero(BIGNATS b)
 {
-		for (int i = 0; i < LG_MAX; i++){
-			b[i] = 0;
-		}
+	for (int i = 0; i < LG_MAX; i++)
+		b[i] = 0;
 	}
 	
-void print(BIGNATS b)
+void écriture(BIGNATS b)
 {
 	int m;
 	for (m = LG_MAX-1; m >=0; m--)
@@ -99,17 +100,6 @@ void print(BIGNATS b)
 	for (int i = m ; i >= 0; i--)
 		printf("%d", b[i]);
 	printf("\n");
-
-}
-void caractere(BIGNATS b)
-{
-	char c; int som = 0;
-	while ((c = getchar()) != '\n')
-	{
-		som += c;
-	}
-	trans(b, som);
-
 }
 void trans(BIGNATS b,int n)
 {
@@ -134,9 +124,9 @@ void lire(BIGNATS b){
 }
 void lecture(BIGNATS b1, BIGNATS b2)
 {
-	printf("b1:");
+	printf("b1=");
 	lire(b1);
-	printf("b2:");
+	printf("b2=");
 	lire(b2);
 }
 void liste()
@@ -151,7 +141,7 @@ void liste()
 	printf("choisir:");
 	
 }
-void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3)
+void Add(const BIGNATS b1, const BIGNATS b2, BIGNATS b3)
 {
 	BIGNATS b4;
 	zero(b4); 
@@ -166,7 +156,7 @@ void Add(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 	for (int i = 0; i < LG_MAX; i++)
 		b3[i] = b4[i];
 }
-void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3)
+void Sous(BIGNATS b1, const BIGNATS b2, BIGNATS b3)
 {
 	for (int i = 0; i < LG_MAX; i++){
 		if (b1[i]>=b2[i])
@@ -182,7 +172,7 @@ void Sous(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 		}
 	}
 }
-void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3){
+void Multi(const BIGNATS b1, BIGNATS b2, BIGNATS b3){
 	while (1){
 		if (b2[0] == 0){
 			int k = 0;
@@ -200,7 +190,7 @@ void Multi(BIGNATS b1, BIGNATS b2, BIGNATS b3){
 		}
 	}
 }
-int Cmp(BIGNATS b1, BIGNATS b2)
+int Cmp(const BIGNATS b1, const BIGNATS b2)
 {
 	int i, j;
 	for (i = LG_MAX - 1; i >= 0; i--){
@@ -229,7 +219,7 @@ int Cmp(BIGNATS b1, BIGNATS b2)
 		}
 	}
 }
-void printResult(int n)
+void afficherResult(const int n)
 {
 	if (n == 1)
 		printf("b1>b2\n");
@@ -238,7 +228,7 @@ void printResult(int n)
 	else
 		printf("b1=b2\n");
 }
-void Div(BIGNATS b1, BIGNATS b2, BIGNATS b3)
+void Div(BIGNATS b1, const BIGNATS b2, BIGNATS b3)
 {
 	while (Cmp(b1, b2) > 0){
 		int i = 0;
@@ -269,25 +259,32 @@ void Modul(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 	while (Cmp(b1, b2) == 1)
 		Sous(b1, b2, b1);
 	if (Cmp(b1, b2) == -1){
-		for (int i = 0; i < LG_MAX; i++)
-			b3[i] = b1[i];
+		assignation(b3, b1);
 	}
 }
-void fact(int n, BIGNATS b)
+void fact(const int n, BIGNATS b)
 {
 	BIGNATS b2, b3;
 	zero(b2);
 	zero(b);
 	zero(b3);
 	b3[0] = 1;
-	
 	for (int i = 1; i <= n; i++){
 		trans(b2, i);
 		Multi(b3, b2, b);
-		for (int i = 0; i < LG_MAX; i++)
-			b3[i] = b[i];
+		assignation(b3, b);
 		zero(b);
 	}
-	for (int i = 0; i < LG_MAX - 1; i++)
-		b[i] = b3[i];
+	assignation(b, b3);
+}
+void assignation(BIGNATS b1, const BIGNATS b2)
+{
+	for (int i = 0; i < LG_MAX; i++)
+		b1[i] = b2[i];
+}
+int readNextInt()
+{
+	int n;
+	scanf("%d", &n);
+	return n;
 }
