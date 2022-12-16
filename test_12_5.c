@@ -16,7 +16,7 @@ void trans(BIGNATS b,int n);
 void lire(BIGNATS b);
 void lecture(BIGNATS b1, BIGNATS b2);
 void liste();
-void Add(const BIGNATS b1,const BIGNATS b2, BIGNATS b3);
+void Add(const BIGNATS b1, const BIGNATS b2, BIGNATS b3);
 void Sous(BIGNATS b1, const BIGNATS b2, BIGNATS b3);
 void Multi(const BIGNATS b1, BIGNATS b2, BIGNATS b3);
 int Cmp(const BIGNATS b1, const BIGNATS b2);
@@ -56,7 +56,7 @@ int main(void){
 		écriture(b3);
 		break;
 	case Division:
-		lecture(b1, b2, b3);
+		lecture(b1, b2);
 		Div(b1, b2, b3);//b3=b1/b2
 		printf("b1/b2=");
 		écriture(b3);
@@ -256,10 +256,6 @@ int Cmp(const BIGNATS b1, const BIGNATS b2)
 				return -1;
 		}
 	}
-}
-int CmpPlus(const BIGNATS b1, const BIGNATS b2)
-{
-
 }
 void afficherResult(const int n)
 {
