@@ -19,13 +19,20 @@ void liste();
 void Add(const BIGNATS b1, const BIGNATS b2, BIGNATS b3);
 void Sous(BIGNATS b1, const BIGNATS b2, BIGNATS b3);
 void Multi(const BIGNATS b1, BIGNATS b2, BIGNATS b3);
-int Cmp(const BIGNATS b1, const BIGNATS b2);
-void afficherResult(const int n);
+void Cmp(const BIGNATS b1, const BIGNATS b2);
 void Div(BIGNATS b1, const BIGNATS b2, BIGNATS b3);
 void Modul(BIGNATS b1, BIGNATS b2, BIGNATS b3);
 void fact(const int n, BIGNATS b);
 void assignation(BIGNATS b1,const BIGNATS b2);
 int readNextInt();
+int TrouIndice1(const BIGNATS b1, int i);
+int TrouIndice2(const BIGNATS b2, int j);
+int CmpPlus(const BIGNATS b1, const BIGNATS b2);
+int CmpMoins(const BIGNATS b1, const BIGNATS b2);
+int CmpEgal(const BIGNATS b1, const BIGNATS b2);
+int iPlusj(const BIGNATS b1, const BIGNATS b2, int i, int j);
+int iMoinsj(const BIGNATS b1, const BIGNATS b2, int i, int j);
+int iEgalj(const BIGNATS b1, const BIGNATS b2, int i, int j);
 int main(void){
 	BIGNATS b1, b2, b3;
 	int n;
@@ -69,7 +76,7 @@ int main(void){
 		break;
 	case Comparason:
 		lecture(b1, b2);
-		afficherResult(Cmp(b1, b2));
+		Cmp(b1, b2);
 		break;
 	case Factorielle:
 		fact(n=readNextInt(), b3);//place la valeur de factorielle de n à b3
@@ -226,42 +233,13 @@ void Multi(const BIGNATS b1, BIGNATS b2, BIGNATS b3){
 	}
 }
 /*
-Concéquent:
+rôle:affiche les résultats de la comparaison 
 */
-int Cmp(const BIGNATS b1, const BIGNATS b2)
+void Cmp(const BIGNATS b1, const BIGNATS b2)
 {
-	int i, j;
-	for (i = LG_MAX - 1; i >= 0; i--){
-		if (b1[i])
-			break;
-	}
-	for (j = LG_MAX - 1; j >= 0; j--){
-		if (b2[j])
-			break;
-	}
-	if (i > j)
-		return 1;
-	else if (i < j)
-		return -1;
-	else{
-		while (b1[i] == b2[j] && i >= 0 && j >= 0){
-			i--; j--;
-		}
-		if (i < 0)
-			return 0;
-		else{
-			if (b1[i]>b2[j])
-				return 1;
-			else
-				return -1;
-		}
-	}
-}
-void afficherResult(const int n)
-{
-	if (n == 1)
+	if (CmpPlus(b1, b2))
 		printf("b1>b2\n");
-	else if (n == -1)
+	else if (CmpMoins(b1, b2))
 		printf("b1<b2\n");
 	else
 		printf("b1=b2\n");
@@ -271,8 +249,9 @@ Concéquent:b3=b1/b2
 */
 void Div(BIGNATS b1, const BIGNATS b2, BIGNATS b3)
 {
+	int count = 0;
 	// Si b1>b2,le nombre de cycle est la division
-	while (Cmp(b1, b2) > 0){//b2 moins b1 jusqu'à b1<b2
+	while (CmpPlus(b1,b2)){//b2 moins b1 jusqu'à b1<b2
 		int i = 0;
 		Sous(b1, b2, b1);//b1=b1-b2
 		if (b3[0] != 9)
@@ -283,10 +262,11 @@ void Div(BIGNATS b1, const BIGNATS b2, BIGNATS b3)
 				b3[i] = 0;
 			b3[i]++;
 		}
+		count++;
 	}
 	//b1=b2 ou b1<b2
 	//Si b1<b2 ,la division est 0
-	if (Cmp(b1, b2) == 0){
+	if (CmpEgal(b1,b2)){
 		int i = 0;
 		if (b3[0] != 9)
 			b3[0]++;
@@ -303,12 +283,11 @@ Concéquent:b3=b1%b2
 */
 void Modul(BIGNATS b1, BIGNATS b2, BIGNATS b3)
 {   //Si b1>b2,b1 moins b2 jusqu'a b1 <b2
-	while (Cmp(b1, b2) == 1)
+	while (CmpPlus(b1, b2))
 		Sous(b1, b2, b1);
 	//b1<b2,la modulation est b1
-	if (Cmp(b1, b2) == -1){
+	if (CmpMoins(b1, b2))
 		assignation(b3, b1);
-	}
 }
 /*
 rôle:calculer n!
@@ -344,4 +323,122 @@ int readNextInt()
 	int n;
 	scanf("%d", &n);
 	return n;
+}
+/*
+rôle:renvoie l’indice du chiffre le plus élevé dans b1
+*/
+int TrouIndice1(const BIGNATS b1, int i)
+{
+	for (i = LG_MAX - 1; i >= 0; i--)
+		if (b1[i])
+			return i;
+		return EXIT_FAILURE;
+}
+/*
+rôle:renvoie l’indice du chiffre le plus élevé dans b2
+*/
+int TrouIndice2(const BIGNATS b2, int j)
+{
+		for (j = LG_MAX - 1; j >= 0; j--)
+			if (b2[j])
+				return j;
+			return EXIT_FAILURE;
+}
+/*
+rôle:b1>b2,renvoie une valeur booléenne 1,sinon,renvoie une valeur booléenne 0
+*/
+int CmpPlus(const BIGNATS b1, const BIGNATS b2)
+{
+	int i = 0, j = 0;
+	i = TrouIndice1(b1, i);
+	j = TrouIndice2(b2, j);
+	if (i > j)
+		return 1;
+	else if (i < j)
+		return 0;
+	else
+		return iPlusj(b1, b2, i, j);
+}
+/*
+rôle:b1<b2,renvoie une valeur booléenne 1,sinon,renvoie une valeur booléenne 0
+*/
+int CmpMoins(const BIGNATS b1, const BIGNATS b2)
+{
+	int i = 0, j = 0;
+	i = TrouIndice1(b1, i);
+	j = TrouIndice2(b2, j);
+	if (i > j)
+		return 0;
+	else if (i < j)
+		return 1;
+	else
+		return iMoinsj(b1, b2, i, j);
+}
+/*
+rôle:b1=b2,renvoie une valeur booléenne 1,sinon,renvoie une valeur booléenne 0
+*/
+int CmpEgal(const BIGNATS b1, const BIGNATS b2)
+{
+	int i = 0, j = 0;
+	i = TrouIndice1(b1, i);
+	j = TrouIndice2(b2, j);
+	if (i > j)
+		return 0;
+	else if (i < j)
+		return 0;
+	else
+		return iEgalj(b1, b2, i, j);
+}
+/*
+antécédent:i est égal à j
+rôle:b1>b2,renvoie une valeur booléenne 1,sinon,renvoie une valeur booléenne 0
+*/
+int iPlusj(const BIGNATS b1, const BIGNATS b2, int i, int j)
+{
+	while (b1[i] == b2[j] && i >= 0 && j >= 0){
+		i--; j--;
+	}
+	if (i < 0)
+		return 0;
+	else{
+		if (b1[i]>b2[j])
+			return 1;
+		else
+			return 0;
+	}
+}/*
+antécédent:i est égal à j
+rôle:b1<b2,renvoie une valeur booléenne 1,sinon,renvoie une valeur booléenne 0
+*/
+int iMoinsj(const BIGNATS b1, const BIGNATS b2, int i, int j)
+{
+	while (b1[i] == b2[j] && i >= 0 && j >= 0){
+		i--; j--;
+	}
+	if (i < 0)
+		return 0;
+	else{
+		if (b1[i]>b2[j])
+			return 0;
+		else
+			return 1;
+	}
+}
+/*
+antécédent:i est égal à j
+rôle:b1=b2,renvoie une valeur booléenne 1,sinon,renvoie une valeur booléenne 0
+*/
+int iEgalj(const BIGNATS b1, const BIGNATS b2, int i, int j)
+{
+	while (b1[i] == b2[j] && i >= 0 && j >= 0){
+		i--; j--;
+	}
+	if (i < 0)
+		return 1;
+	else{
+		if (b1[i]>b2[j])
+			return 0;
+		else
+			return 0;
+	}
 }
