@@ -8,13 +8,45 @@ void menu()
 	printf("******       0.Exit        **************\n");
 }
 void InitContact(struct contact* ps)
-{   //将内容和用户数均设为零
-	memset(ps->data, 0, sizeof(ps->data));
+{   
+	ps->data = (member*)malloc(DEFAULT_SZ*sizeof(member));
+	if (ps->data == NULL){
+		printf("%s\n", strerror(errno));
+		return;
+	}
 	ps->size = 0;
+	ps->capacity = DEFAULT_SZ;
+}
+void CheckCapacity(contact* ps)
+{
+	if (ps->size == ps->capacity){
+		member* ptr = realloc(ps->data, (ps->capacity+2)*sizeof(member));
+		if (ptr != NULL){
+			ps->data = ptr;
+			ps->capacity += 2;
+			printf("增容成功\n");
+		}
+		else
+			printf("增容失败\n");
+
+	}
 }
 void AddContact(struct contact* ps)
 {
-	if (ps->size == MAX)
+	CheckCapacity(ps);
+	printf("请输入名字：");
+	scanf("%s", &(ps->data[ps->size].name));
+	printf("请输入性别：");
+	scanf("%s", &(ps->data[ps->size].sex));
+	printf("请输入年龄：");
+	scanf("%s", &(ps->data[ps->size].age));
+	printf("请输入电话：");
+	scanf("%s", &(ps->data[ps->size].tele));
+	printf("请输入地址：");
+	scanf("%s", &(ps->data[ps->size].address));
+	(ps->size)++;
+	printf("添加成功\n");
+	/*if (ps->size == MAX)
 		printf("用户数已满");
 	else
 	{
@@ -29,8 +61,8 @@ void AddContact(struct contact* ps)
 		printf("请输入地址：");
 		scanf("%s", &(ps->data[ps->size].address));
 		(ps->size)++;
-	}
-	printf("添加成功\n");
+	}*/
+	//printf("添加成功\n");
 }
 void ShowContact(const struct contact* ps)
 {
@@ -105,7 +137,13 @@ void ModifyContact(struct contact* ps)
 int cmp(void*p1, void* p2){
 	return strcmp(((struct member*)p1)->name, ((struct member*)p2)->name);
 }
-void SortContact(struct contact*ps)
+void SortContact(struct contact* ps)
 {
 	qsort(ps->data, ps->size, sizeof(ps->data[0]), cmp);
+	printf("排序成功\n");
+}
+void DestroyContact(contact* ps)
+{
+	free(ps->data);
+	ps->data = NULL;
 }

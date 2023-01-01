@@ -32,6 +32,7 @@ int main(void){
 			SortContact(&con);
 			break;
 		case Exit:
+			DestroyContact(&con);
 			break;
 		default:
 			fprintf(stderr, "error");
