@@ -30,3 +30,4 @@ void SearchContact(const struct contact* ps);
 void ModifyContact(struct contact* ps);
 void SortContact(struct contact*ps);
 void DestroyContact(contact* ps);
+void SaveContact(contact* ps);

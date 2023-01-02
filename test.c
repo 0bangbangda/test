@@ -32,13 +32,13 @@ int main(void){
 			SortContact(&con);
 			break;
 		case Exit:
+			SaveContact(&con);
 			DestroyContact(&con);
 			break;
 		default:
 			fprintf(stderr, "error");
 		}
 
-		
 	} while (input);
 	return EXIT_SUCCESS;
 }

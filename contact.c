@@ -7,20 +7,10 @@ void menu()
 	printf("*****  5.Show        6.Sort         *****\n");
 	printf("******       0.Exit        **************\n");
 }
-void InitContact(struct contact* ps)
-{   
-	ps->data = (member*)malloc(DEFAULT_SZ*sizeof(member));
-	if (ps->data == NULL){
-		printf("%s\n", strerror(errno));
-		return;
-	}
-	ps->size = 0;
-	ps->capacity = DEFAULT_SZ;
-}
 void CheckCapacity(contact* ps)
 {
 	if (ps->size == ps->capacity){
-		member* ptr = realloc(ps->data, (ps->capacity+2)*sizeof(member));
+		member* ptr = realloc(ps->data, (ps->capacity + 2)*sizeof(member));
 		if (ptr != NULL){
 			ps->data = ptr;
 			ps->capacity += 2;
@@ -31,6 +21,35 @@ void CheckCapacity(contact* ps)
 
 	}
 }
+void LoadContact(contact* ps)
+{
+	member tmp = { 0 };
+	FILE* pfRead = fopen("contact.dat", "rb");
+	if (pfRead == NULL){
+		printf("pfRead:%s\n", strerror(errno));
+		return;
+	}
+	//以二进制读取文件
+	while (fread(&tmp, sizeof(member), 1, pfRead)){
+		CheckCapacity(ps);
+		ps->data[ps->size] = tmp;
+		ps->size++;
+	}
+	fclose(pfRead);
+	pfRead = NULL;
+}
+void InitContact(struct contact* ps)
+{   
+	ps->data = (member*)malloc(DEFAULT_SZ*sizeof(member));
+	if (ps->data == NULL){
+		printf("%s\n", strerror(errno));
+		return;
+	}
+	ps->size = 0;
+	ps->capacity = DEFAULT_SZ;
+	LoadContact(ps);
+}
+
 void AddContact(struct contact* ps)
 {
 	CheckCapacity(ps);
@@ -146,4 +165,25 @@ void DestroyContact(contact* ps)
 {
 	free(ps->data);
 	ps->data = NULL;
+}
+void SaveContact(contact* ps)
+{
+	member tmp = { 0 };
+	FILE* pf = fopen("contact.dat", "wb");
+	if (pf == NULL){
+		printf("%s\n", strerror(errno));
+		return;
+	}
+	//格式化写入文件
+	/*for (int i = 0; i < ps->size; i++){
+		fprintf(pf, "%s\t%s\t%s\t%s\t%s\n", ps->data[i].name, ps->data[i].sex, ps->data[i].age, ps->data[i].tele, ps->data[i].address);
+	}*/
+	//二进制形式写文件
+	for (int i = 0; i < ps->size; i++){
+		tmp = ps->data[i];
+		fwrite(&tmp, sizeof(member), 1, pf);
+	}
+	printf("保存成功\n");
+	fclose(pf);
+	pf = NULL;
 }
