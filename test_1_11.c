@@ -36,25 +36,45 @@
 //	for (int i = 0; i < 10; i++)
 //		*(p + i) = str2[i];
 //}
+//int main(void){
+//	char str[10], *p, *pmax, max;
+//	gets_s(str, 10);
+//	p = str;
+//	//找最大
+//	max = *(p++);
+//	while ((*p) != '\0'){
+//		if ((*p) > max){
+//			max = *p;
+//			pmax = p;
+//		}
+//		p++;
+//	}
+//	p = pmax;
+//	while (p > str){
+//		*p = *(p - 1);
+//		p--;
+//	}
+//	*p = max;
+//	puts(p);
+//	return EXIT_SUCCESS;
+//}
+#include<ctype.h>
+#include<string.h>
 int main(void){
-	char str[10], *p, *pmax, max;
-	gets_s(str, 10);
-	p = str;
-	//找最大
-	max = *(p++);
-	while ((*p) != '\0'){
-		if ((*p) > max){
-			max = *p;
-			pmax = p;
+	char str[20],str2[20];
+	gets_s(str, 20);
+	for (int i = 0, j = 0; i <= strlen(str); i++){
+		if (isspace(str[i]))
+			continue;
+		else{
+			str2[j] = str[i];
+			j++;
 		}
-		p++;
 	}
-	p = pmax;
-	while (p > str){
-		*p = *(p - 1);
-		p--;
-	}
-	*p = max;
-	puts(p);
+	for (int i = 0; i < 20; i++)
+		str[i] = '\0';
+	for (int i = 0; i < strlen(str2); i++)
+		str[i] = str2[i];
+	printf("%s\n", str);
 	return EXIT_SUCCESS;
 }
