@@ -54,10 +54,25 @@ void SListTest4(){
 	SListInsert(&plist, pos3, 40);
 	SListPrint(plist);
 }
+void SListTest5(){
+	SLNode* plist = NULL;
+	SLListPushBack(&plist, 1);
+	SLListPushBack(&plist, 2);
+	SLListPushBack(&plist, 3);
+	SLListPushBack(&plist, 4);
+	SListPrint(plist);
+	SLNode *pos = SListFind(plist, 3);
+	SListEraser(&plist, &pos);
+	SListPrint(plist);
+	pos = SListFind(plist, 1);
+	SListEraser(&plist, &pos);
+	SListPrint(plist);
+}
 int main(void){
 	//SLlistTest();
 	//SLlistTest2();
 	//SListTest3();
-	SListTest4();
+	//SListTest4();
+	SListTest5();
 	return EXIT_SUCCESS;
 }

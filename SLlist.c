@@ -112,3 +112,19 @@ void SListInsert(SLNode **pphead, SLNode* pos, SLDataType x)
 		*pphead = newnode;
 	}
 }
+void SListEraser(SLNode **pphead, SLNode **ppos)
+{
+	//ͷɾ
+	if (*ppos == *pphead){
+		SListPopFront(pphead);
+	}
+	else{//��ͷɾ
+		SLNode *posPrev = *pphead;
+		while (posPrev->next != *ppos){
+			posPrev = posPrev->next;
+		}
+		posPrev->next = (*ppos)->next;
+		free(*ppos);
+		*ppos = NULL;
+	}
+}
