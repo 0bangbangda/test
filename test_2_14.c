@@ -61,3 +61,23 @@ else{
 }
 }
 }
+#include<stdio.h>
+#include<stdlib.h>
+int my_strlen(char* str);
+int main(int argc,char* argv[]){
+  printf("%d\n",my_strlen(argv[1]));
+  return EXIT_SUCCESS;
+}
+/*
+antecedent:str point to "HI!XIDIAN"
+result:9
+role:calcule le length de "HI!XIDIAN"
+ */
+int my_strlen(char* str)
+{
+  int i=0;//indice de caractere
+  while(str[i]){//Si str[i]!='\0',i++.
+  i++;
+}
+return i;
+}
