@@ -33,6 +33,7 @@ while(left<=right){
 *returnSize=capacity;
 return arr;
 }
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -61,3 +62,21 @@ else{
 }
 return head;
 }
+struct ListNode *newhead=NULL,*next=NULL,*tail;
+int size=0;
+int *arr=NULL;
+while(head){
+    next=head->next;
+    head->next=newhead;
+    newhead=head;
+    head=next;
+}
+tail=newhead;
+while(tail){
+    arr=(int*)realloc(arr,sizeof(int)*(size+1));
+    arr[size]=tail->val;
+    size++;
+    tail=tail->next;
+}
+*returnSize=size;
+return arr;
