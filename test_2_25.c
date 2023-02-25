@@ -40,3 +40,18 @@ else{
     return head;
 }
 }
+struct ListNode* swapPairs(struct ListNode* head){
+struct ListNode *temp=(struct ListNode*)malloc(sizeof(struct ListNode));
+temp->next=head;
+if(temp->next==NULL||temp->next->next==NULL)
+return head;
+struct ListNode *n1,*n2;
+while(temp->next&&temp->next->next){
+    n1=temp->next;
+    n2=temp->next->next;
+    temp->next=n2;
+    n1->next=n2->next;
+    n2->next=n1;
+    temp=n1;
+}
+}
