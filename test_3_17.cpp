@@ -1,64 +1,31 @@
 #include<iostream>
+#include<algorithm>
 using namespace std;
 class Cube
 {
 private:
-	int length;
-	int wide;
-	int high;
+	int arr[3];
 public:
 	void setInfo(int a,int b,int c){
-		if (a > b){
-			if (a > c){
-				length = a;
-				if (b > c){
-					wide = b;
-					high = c;
-				}
-				else{
-					wide = c;
-					high = b;
-				}
-			}
-			else{
-				length = c;
-				wide = a;
-				high = b;
-			}
-		}
-		else{
-			if (b > c){
-				length = b;
-				if (a > c){
-					wide = a;
-					high = c;
-				}
-				else{
-					wide = c;
-					high = a;
-				}
-			}
-			else{
-				length = c;
-				wide = b;
-				high = a;
-			}
-		}
+		arr[0] = a;
+		arr[1] = b;
+		arr[2] = c;
+		sort(arr, arr + 3);
 	}
 	int getS(){
-		return 2 * (length*wide + length*high + wide*high);
+		return 2 * (arr[0] * arr[1] + arr[0] * arr[2] + arr[1] * arr[2]);
 	}
 	int getV(){
-		return length*wide*high;
+		return arr[0] * arr[1] * arr[2];
 	}
 	int getL(){
-		return length;
+		return arr[0];
 	}
 	int getW(){
-		return wide;
+		return arr[1];
 	}
 	int getH(){
-		return high;
+		return arr[2];
 	}
 };
 int Judge(Cube &c1, Cube &c2);
