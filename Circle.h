@@ -9,9 +9,11 @@ private:
 	int m_r;
 public:
 	Circle(Point &centre, int r);
+	~Circle();
 	void setR(int r);
 	void setCentre(const Point &p);
 	int getR()const;
 	int getX() const;
 	int getY()const;
+
 };

@@ -2,6 +2,10 @@
 Circle::Circle(Point &centre, int r) :m_centre(centre), m_r(r){
 	cout << "有参构造函数调用" << endl;
 }
+Circle::~Circle()
+{
+	cout << "Circle析构函数调用" << endl;
+}
 void Circle::setR(int r){
 	m_r = r;
 }

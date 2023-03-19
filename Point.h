@@ -9,6 +9,7 @@ private:
 public:
 	Point(int x, int y);
 	Point(const Point &p);
+	~Point();
 	void setX(int x);
 	void setY(int y);
 	int getX()const;

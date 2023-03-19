@@ -7,12 +7,16 @@ using namespace std;
 判断点与圆的关系
 */
 void IsInCircle(const Circle &c, const Point &p);
-int main(void){
+void test01()
+{
 	Point p1(0, 0);
 	Circle c(p1, 4);
-	Point p2(0,2);
+	Point p2(0, 2);
 	c.setCentre(p2);
 	IsInCircle(c, p2);
+}
+int main(void){
+	test01();
 	/*c.setCentre(0, 0);
 	c.setR(4);*/
 	/*Point p;

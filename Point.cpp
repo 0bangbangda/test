@@ -8,6 +8,10 @@ Point::Point(const Point &p) :m_x(p.getX()), m_y(p.getY())
 	cout << "拷贝构造函数调用" << endl;
 
 }
+Point::~Point()
+{
+	cout << "Point析构函数调用" << endl;
+}
 void Point::setX(int x)
 {
 	m_x = x;
