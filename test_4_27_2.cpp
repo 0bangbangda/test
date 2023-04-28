@@ -11,7 +11,7 @@ class Array
 			cout << arr[i] << " ";
 		cout << endl;
 	}
-private:
+public:
 	T *pAddress;
 	int m_capacity;
 	int m_size;
@@ -34,6 +34,9 @@ public:
 		this->m_capacity = arr.m_capacity;
 		this->m_size = arr.m_size;
 		memcpy(this->pAddress, arr.pAddress, arr.m_capacity*sizeof(T));
+		//memcpy拷贝类数组后，delete[]会出现问题
+		/*for (int i = 0; i < arr.m_capacity; i++)
+			this->pAddress[i] = arr.pAddress[i];*/
 	}
 	~Array()
 	{
@@ -97,7 +100,7 @@ void test2()
 	Person p1("张三", 10);
 	Person p2("李四", 20);
 	Person p3("王五", 30);
-	Array<Person> arr1;
+	Array<Person> arr1(3);
 	arr1.push_back(p1);
 	arr1.push_back(p2);
 	arr1.push_back(p3);
