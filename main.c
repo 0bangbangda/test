@@ -38,13 +38,35 @@ void test2()
 }
 void GaussRSL(matrice A, vecteur B, vecteur *X)
 {
-	
 	for (int i = 0; i < getNbLignes(A); i++)
 	{
 		for (int j = 0; j <= i; j++)
 		{
 			if (j == i)
 			{
+				while (getM(A, j+1, j+1) == 0)
+				{
+					int l;
+					for (l = j; getM(A, l+1, j+1) == 0; l++)
+					{
+						if (l == getNbLignes(A) - 1)
+						{
+							fprintf(stderr, "Le syst¨¨me est li¨¦ et n¡¯admet pas de solution unique\n");
+							return;
+						}
+					}
+					echangerLignesM(&A, j+1, l+1);
+					echangerLignesV(&B, j+1, l+1);
+					for (j = 0; j < i; j++)
+					{
+						T divi = -getM(A, i + 1, j + 1);
+						for (int k = j; k < getNbCols(A); k++)
+						{
+							setM(&A, i + 1, k + 1, getM(A, i + 1, k + 1) + getM(A, j + 1, k + 1)*divi);
+						}
+						setV(&B, i + 1, getV(B, i + 1) + getV(B, j + 1)*divi);
+					}
+				}
 				T divi = getM(A, j+1, j+1);
 				for (int k = j; k < getNbCols(A); k++)
 				{
@@ -62,7 +84,16 @@ void GaussRSL(matrice A, vecteur B, vecteur *X)
 				setV(&B, i+1, getV(B, i+1) + getV(B, j+1)*divi);
 			}
 		}
+		for (int i = getNbLignes(A); i >= 0; i--)
+		{
+			setV(X, i + 1, getV(B, i + 1));
+			for (int j = i + 1; j < getNbCols(A); j++)
+			{
+				setV(X, i + 1, getV(*X, i + 1) - getM(A, i + 1, j + 1)*getV(*X, j + 1));
+			}
+		}
 	}
+	ecrireVecteur(*X);
 }
 void test3()
 {
@@ -70,6 +101,9 @@ void test3()
 	vecteur B, X;
 	lireMatrice(&A, "matrice.txt");
 	lireVecteur(&B, "vecteur.txt");
+	ecrireMatrice(A);
+	ecrireVecteur(B);
+	X = vecteurNulle(B.nbl);
 	GaussRSL(A, B, &X);
 	ecrireMatrice(A);
 	ecrireVecteur(B);
