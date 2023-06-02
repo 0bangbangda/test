@@ -1,8 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
+#include<math.h>
 #include"matrice.h"
 #include"vecteur.h"
+const double eps = 1e-10;
 void test1()
 {
 	matrice m = matriceNulle(4, 3);
@@ -63,16 +65,32 @@ void GaussRSL(matrice A, vecteur B, vecteur *X)
 						for (int k = j; k < getNbCols(A); k++)
 						{
 							setM(&A, i + 1, k + 1, getM(A, i + 1, k + 1) + getM(A, j + 1, k + 1)*divi);
+							if (fabs(getM(A, i + 1, k + 1) )< eps)
+							{
+								setM(&A, i + 1, k + 1, 0);
+							}
 						}
 						setV(&B, i + 1, getV(B, i + 1) + getV(B, j + 1)*divi);
+						if (fabs(getV(B, i + 1)) < eps)
+						{
+							setV(&B, i + 1, 0);
+						}
 					}
 				}
 				T divi = getM(A, j+1, j+1);
 				for (int k = j; k < getNbCols(A); k++)
 				{
 					setM(&A, j + 1, k + 1, getM(A, j + 1, k + 1) / divi);
+					if (fabs(getM(A, j + 1, k + 1))< eps)
+					{
+						setM(&A, j + 1, k + 1, 0);
+					}
 				}
 				setV(&B, j+1, getV(B, j+1) / divi);
+				if (fabs(getV(B, j + 1)) < eps)
+				{
+					setV(&B, i + 1, 0);
+				}
 			}
 			else
 			{
@@ -80,8 +98,17 @@ void GaussRSL(matrice A, vecteur B, vecteur *X)
 				for (int k = j; k < getNbCols(A); k++)
 				{
 					setM(&A, i+1, k+1, getM(A, i+1, k+1) + getM(A, j+1, k+1)*divi);
+					if (fabs(getM(A, i + 1, k + 1))< eps)
+					{
+						setM(&A, i + 1, k + 1, 0);
+					}
+
 				}
 				setV(&B, i+1, getV(B, i+1) + getV(B, j+1)*divi);
+				if (fabs(getV(B, i + 1)) < eps)
+				{
+					setV(&B, i + 1, 0);
+				}
 			}
 		}
 		for (int i = getNbLignes(A); i >= 0; i--)
@@ -90,6 +117,10 @@ void GaussRSL(matrice A, vecteur B, vecteur *X)
 			for (int j = i + 1; j < getNbCols(A); j++)
 			{
 				setV(X, i + 1, getV(*X, i + 1) - getM(A, i + 1, j + 1)*getV(*X, j + 1));
+				if (fabs(getV(B, i + 1)) < eps)
+				{
+					setV(&B, i + 1, 0);
+				}
 			}
 		}
 	}
