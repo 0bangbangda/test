@@ -4,6 +4,7 @@
 #include<math.h>
 #include"matrice.h"
 #include"vecteur.h"
+#include"matriceC.h"
 const double eps = 1e-10;
 void test1()
 {
@@ -139,11 +140,20 @@ void test3()
 	ecrireMatrice(A);
 	ecrireVecteur(B);
 }
+void test4()
+{
+	matriceC A;
+	lireMatriceC(&A, "matrice.txt");
+	vecteur X = vecteurNulle(A.nbc);
+	vecteur B = vecteurNulle(A.nbl);
+	GaussRSL(ToMatriceSimple(A), B, &X);
+}
 int main(void)
 {
 //	test1();
 	//test2();
-	test3();
+	//test3();
+	test4();
 	system("pause");
 	return EXIT_SUCCESS;
 }
