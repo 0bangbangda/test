@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
+#include<string.h>
 #include"matrice.h"
 #include"vecteur.h"
 #include"matriceC.h"
@@ -125,7 +126,7 @@ void GaussRSL(matrice A, vecteur B, vecteur *X)
 			}
 		}
 	}
-	ecrireVecteur(*X);
+	//ecrireVecteur(*X);
 }
 void test3()
 {
@@ -148,12 +149,71 @@ void test4()
 	vecteur B = vecteurNulle(A.nbl);
 	GaussRSL(ToMatriceSimple(A), B, &X);
 }
+void test5()
+{
+	char *str = (char*)calloc(1,sizeof(char));
+	char tmp[12] = { 0 };
+	char *str2 = (char*)calloc(1, sizeof(char));
+	char tmp2[14] = { 0 };
+	matrice A;
+	vecteur B, X;
+	lireMatrice(&A, "matrice.txt");
+	lireVecteur(&B, "vecteur.txt");
+	X = vecteurNulle(B.nbl);
+	GaussRSL(A, B, &X);
+	for (int i = 0; i < getNbLignes(A); i++)
+	{
+		for (int j = 0; j < getNbCols(A); j++)
+		{
+			if (getM(A, i + 1, j + 1))
+			{
+				if (j == 0)
+				{
+					sprintf(tmp, "%.1fx%d", getM(A, i + 1, j + 1), j + 1);
+					str = realloc(str, strlen(str) + strlen(tmp) + 1);
+					strcat(str, tmp);
+				}
+				else
+				{
+					if (getM(A, i + 1, j + 1) > 0)
+					{
+						sprintf(tmp, "+%.1fx%d", getM(A, i + 1, j + 1), j + 1);
+						str = realloc(str, strlen(str) + strlen(tmp) + 1);
+						strcat(str, tmp);
+					}
+					else
+					{
+						sprintf(tmp, "%.1fx%d", getM(A, i + 1, j + 1), j + 1);
+						str = realloc(str, strlen(str) + strlen(tmp) + 1);
+						strcat(str, tmp);
+					}
+				}
+			}
+		}
+		sprintf(tmp, "=%lf\n", getV(B, i + 1));
+		str = realloc(str, strlen(str) + strlen(tmp) + 1);
+		strcat(str, tmp);
+	}
+	printf("%s", str);
+	free(str);
+	for (int i = 0; i < getNbLignesV(X); i++)
+	{
+		sprintf(tmp2, "x%d=%lf\n", i + 1, getV(X,i + 1));
+		str2 = realloc(str2, strlen(str) + strlen(tmp2) + 1);
+		strcat(str2, tmp2);
+	}
+	printf("%s", str2);
+	free(str2);
+}
 int main(void)
 {
 //	test1();
 	//test2();
 	//test3();
-	test4();
+//	test4();
+	test5();
+
+//	printf("%d\n", );
 	system("pause");
 	return EXIT_SUCCESS;
 }
