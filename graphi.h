@@ -13,8 +13,6 @@ typedef struct
 	int l;
 }SysLineaire;
 static const double eps = 1e-10;
-static Widget ZoneAffich1;
-static Widget ZoneAffich2;
 extern void menu(Widget w,void *data);
 extern void resolution(Widget w,void *data);
 extern void etape(Widget w,void *data);

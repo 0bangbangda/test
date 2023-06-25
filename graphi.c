@@ -1,11 +1,28 @@
 #include"graphi.h"
-#include"gaussRSL.h"
+#include"gauss.h"
+Widget ZoneAffich1;
+Widget ZoneAffich2;
+static void Effacer(SysLineaire *d)
+{
+	free(d->A.mat);
+	free(d->B.vect);
+	free(d->X.vect);
+	d->A.mat=NULL;
+	d->B.vect=NULL;
+	d->X.vect=NULL;
+}
+static void InitSl(SysLineaire *d)
+{
+        lireMatrice(&d->A,"matrice.txt");
+	lireVecteur(&d->B,"vecteur.txt");
+	d->X=vecteurNulle(d->B.nbl);
+	d->l=0;
+}
 void charger(Widget w,void *data)
 {
 	SysLineaire *d=(SysLineaire*)data;
-	lireMatrice(&d->A,"matrice.txt");
-	lireVecteur(&d->B,"vecteur.txt");
-	d->X=vecteurNulle(d->B.nbl);
+	InitSl(d);
+	SetStringEntry(ZoneAffich2,"la matrice et les vecteurs ont ete charges avec succes!");
 }
 static void allocValider(char **ptr,char **str)
 {
@@ -86,22 +103,9 @@ void menu(Widget w,void *data)
 	SetWidgetPos(BVisualiser,PLACE_UNDER,ZoneAffich2,PLACE_RIGHT,BCharger);
 	SetWidgetPos(BAnnuler,PLACE_UNDER,ZoneAffich2,PLACE_RIGHT,BVisualiser);
 	ShowDisplay();
+	SetStringEntry(ZoneAffich2,"Veuiilez agrandir la fenetre avant de operer! ");
 }
-static void Effacer(SysLineaire *d)
-{
-	free(d->A.mat);
-	free(d->B.vect);
-	free(d->X.vect);
-	d->A.mat=NULL;
-	d->B.vect=NULL;
-	d->X.vect=NULL;
-}
-static void InitSl(SysLineaire *d)
-{
-        lireMatrice(&d->A,"matrice.txt");
-	lireVecteur(&d->B,"vecteur.txt");
-	d->X=vecteurNulle(d->B.nbl);
-}
+
 void resolution(Widget w,void *data)
 {
 	char *str=calloc(1,sizeof(char));
@@ -125,7 +129,7 @@ void resolution(Widget w,void *data)
 		strcat(str, tmp);
 	}
 	SetStringEntry(ZoneAffich1,str);
-	d->l=1;
+	d->l=-1;
 	free(str);
 }
 void etape(Widget w,void *data)
@@ -136,7 +140,7 @@ void etape(Widget w,void *data)
 		SetStringEntry(ZoneAffich1,"la matrice et les vecteurs ne sont pas charges!");
 		return;
 	}
-	if(sl->l!=0)
+	if(sl->l==-1)
 	{
 		Effacer(sl);
 		InitSl(sl);
@@ -144,6 +148,18 @@ void etape(Widget w,void *data)
 	int i=sl->l;
 	if(i==getNbLignes(sl->A))
 	{
+	        for (int i = getNbLignes(sl->A)-1; i >= 0; i--)
+	        {
+	                setV(&sl->X, i + 1, getV(sl->B, i + 1));
+			for (int j = i + 1; j < getNbCols(sl->A); j++)
+			{
+				setV(&sl->X, i + 1, getV(sl->X, i + 1) - getM(sl->A, i + 1, j + 1)*getV(sl->X, j + 1));
+			}
+			if (fabs(getV(sl->B, i + 1)) < eps)
+			{
+				setV(&sl->B, i + 1, 0);
+			}
+		}
 	        char *str=calloc(1,sizeof(char));
 	        char tmp[20]={0};
 		for (int i = 0; i < getNbLignesV(sl->X); i++)

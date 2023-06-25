@@ -6,8 +6,8 @@
 #include"matriceC.h"
 #include<libsx.h>
 #include"graphi.h"
-#include"gaussRSL.h"
-
+#include"gauss.h"
+extern Widget ZoneAffich1;
 void init_SysLineaire(SysLineaire *sl)
 {
 	sl->A.mat=NULL;
